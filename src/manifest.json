@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub LGTM",
+  "description": "Automatically adds a random pre-set approval comment when you approve a GitHub pull request.",
+  "version": "0.0.1",
+  "author": "Clyde D'Souza",
+  "homepage_url": "https://github.com/ClydeDz/github-lgtm-chrome-extension",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.github.com/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
