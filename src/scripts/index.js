@@ -1,5 +1,13 @@
 import * as startModule from "./start";
 
-setTimeout(function () {
-  startModule.start(document);
-}, 500);
+const intervalId = setInterval(async function () {
+  try {
+    startModule.start(document);
+  } catch {
+    clearInterval(intervalId);
+    console.info(
+      "⚠️ GitHub LGTM:",
+      "Please reload the page since the extension was reloaded"
+    );
+  }
+}, 1000);
