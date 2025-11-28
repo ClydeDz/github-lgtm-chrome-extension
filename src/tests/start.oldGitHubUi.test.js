@@ -6,13 +6,15 @@ const getReviewMessageSpy = jest
   .mockImplementation(jest.fn());
 
 const getElementByIdSpy = jest.fn();
+const querySelectorAllSpy = jest.fn();
 const addEventListenerSpy = jest.fn();
 
 const mockDocument = {
   getElementById: getElementByIdSpy,
+  querySelectorAll: querySelectorAllSpy,
 };
 
-describe("start", () => {
+describe("start - old github ui", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -26,6 +28,7 @@ describe("start", () => {
         addEventListener: addEventListenerSpy,
       })
       .mockReturnValueOnce({ value: "" });
+    querySelectorAllSpy.mockReturnValueOnce([]);
 
     start(mockDocument);
 
@@ -42,6 +45,7 @@ describe("start", () => {
 
   test("should not add event listener if approve button is missing", () => {
     getElementByIdSpy.mockReturnValueOnce(null);
+    querySelectorAllSpy.mockReturnValueOnce([]);
 
     start(mockDocument);
 
@@ -62,6 +66,7 @@ describe("start", () => {
     getElementByIdSpy
       .mockReturnValueOnce({ addEventListener: addEventListenerSpy })
       .mockReturnValueOnce(reviewCommentsTextAreaSpy);
+    querySelectorAllSpy.mockReturnValueOnce([]);
 
     start(mockDocument);
 
@@ -79,6 +84,7 @@ describe("start", () => {
         addEventListener: addEventListenerSpy,
       })
       .mockReturnValueOnce(null);
+    querySelectorAllSpy.mockReturnValueOnce([]);
 
     start(mockDocument);
 

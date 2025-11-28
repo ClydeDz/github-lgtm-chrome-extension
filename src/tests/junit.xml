@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="5" failures="0" errors="0" time="4.509">
-  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2025-08-22T06:54:12" time="2.335" tests="1">
-    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.018">
+<testsuites name="jest tests" tests="9" failures="0" errors="0" time="3.371">
+  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2025-11-28T12:13:20" time="1.605" tests="1">
+    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.011">
     </testcase>
   </testsuite>
-  <testsuite name="start" errors="0" failures="0" skipped="0" timestamp="2025-08-22T06:54:12" time="2.412" tests="4">
-    <testcase classname="start should execute happy path" name="start should execute happy path" time="0.016">
+  <testsuite name="start - old github ui" errors="0" failures="0" skipped="0" timestamp="2025-11-28T12:13:20" time="1.64" tests="4">
+    <testcase classname="start - old github ui should execute happy path" name="start - old github ui should execute happy path" time="0.014">
     </testcase>
-    <testcase classname="start should not add event listener if approve button is missing" name="start should not add event listener if approve button is missing" time="0.001">
+    <testcase classname="start - old github ui should not add event listener if approve button is missing" name="start - old github ui should not add event listener if approve button is missing" time="0.001">
     </testcase>
-    <testcase classname="start should set review comments value on click" name="start should set review comments value on click" time="0.001">
+    <testcase classname="start - old github ui should set review comments value on click" name="start - old github ui should set review comments value on click" time="0.001">
     </testcase>
-    <testcase classname="start should not set value if review comments textarea is missing" name="start should not set value if review comments textarea is missing" time="0.001">
+    <testcase classname="start - old github ui should not set value if review comments textarea is missing" name="start - old github ui should not set value if review comments textarea is missing" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="start - new github ui" errors="0" failures="0" skipped="0" timestamp="2025-11-28T12:13:20" time="1.657" tests="4">
+    <testcase classname="start - new github ui should execute happy path" name="start - new github ui should execute happy path" time="0.013">
+    </testcase>
+    <testcase classname="start - new github ui should not add event listener if radio buttons are missing" name="start - new github ui should not add event listener if radio buttons are missing" time="0.001">
+    </testcase>
+    <testcase classname="start - new github ui should not add comments if comment radio button is clicked" name="start - new github ui should not add comments if comment radio button is clicked" time="0.001">
+    </testcase>
+    <testcase classname="start - new github ui should not set value if review comments textarea is missing" name="start - new github ui should not set value if review comments textarea is missing" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>

@@ -1,12 +1,6 @@
 import * as utilModule from "./util";
 
-export function start(injectedDocument) {
-  const doc = injectedDocument;
-
-  const approveButton = doc.getElementById(
-    "pull_request_review[event]_approve"
-  );
-
+const runOldGitHubUi = (doc, approveButton) => {
   if (!approveButton) return;
 
   approveButton.addEventListener("click", function () {
@@ -18,4 +12,36 @@ export function start(injectedDocument) {
 
     reviewCommentsTextArea.value = utilModule.getReviewMessage();
   });
+};
+
+const runNewGitHubUi = (doc, radios) => {
+  if (!radios || radios.length < 1) return;
+
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      if (e.target.value === "approve") {
+        const reviewCommentsTextArea = doc.querySelector(
+          'textarea[placeholder="Leave a comment"]'
+        );
+
+        if (!reviewCommentsTextArea) return;
+
+        reviewCommentsTextArea.value = utilModule.getReviewMessage();
+      }
+    });
+  });
+};
+
+export function start(injectedDocument) {
+  const doc = injectedDocument;
+
+  const approveButton = doc.getElementById(
+    "pull_request_review[event]_approve"
+  );
+
+  runOldGitHubUi(doc, approveButton);
+
+  const radios = doc.querySelectorAll('input[name="reviewEvent"]');
+
+  runNewGitHubUi(doc, radios);
 }
