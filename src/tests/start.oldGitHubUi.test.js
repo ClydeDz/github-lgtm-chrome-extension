@@ -23,11 +23,12 @@ describe("start - old github ui", () => {
     addEventListenerSpy.mockImplementation((event, handler) => {
       handler();
     });
+    const dispatchEventSpy = jest.fn();
     getElementByIdSpy
       .mockReturnValueOnce({
         addEventListener: addEventListenerSpy,
       })
-      .mockReturnValueOnce({ value: "" });
+      .mockReturnValueOnce({ value: "", dispatchEvent: dispatchEventSpy });
     querySelectorAllSpy.mockReturnValueOnce([]);
 
     start(mockDocument);
@@ -41,6 +42,9 @@ describe("start - old github ui", () => {
     expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
 
     expect(getReviewMessageSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchEventSpy).toHaveBeenCalledTimes(2);
+    expect(dispatchEventSpy.mock.calls[0][0].type).toBe("input");
+    expect(dispatchEventSpy.mock.calls[1][0].type).toBe("change");
   });
 
   test("should not add event listener if approve button is missing", () => {
@@ -62,7 +66,8 @@ describe("start - old github ui", () => {
     addEventListenerSpy.mockImplementation((event, handler) => {
       handler();
     });
-    const reviewCommentsTextAreaSpy = { value: "" };
+    const dispatchEventSpy = jest.fn();
+    const reviewCommentsTextAreaSpy = { value: "", dispatchEvent: dispatchEventSpy };
     getElementByIdSpy
       .mockReturnValueOnce({ addEventListener: addEventListenerSpy })
       .mockReturnValueOnce(reviewCommentsTextAreaSpy);
@@ -73,6 +78,9 @@ describe("start - old github ui", () => {
     expect(getReviewMessageSpy).toHaveBeenCalledTimes(1);
 
     expect(reviewCommentsTextAreaSpy.value).toBe("LGTM!");
+    expect(dispatchEventSpy).toHaveBeenCalledTimes(2);
+    expect(dispatchEventSpy.mock.calls[0][0].type).toBe("input");
+    expect(dispatchEventSpy.mock.calls[1][0].type).toBe("change");
   });
 
   test("should not set value if review comments textarea is missing", () => {
