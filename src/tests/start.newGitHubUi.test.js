@@ -34,7 +34,8 @@ describe("start - new github ui", () => {
         addEventListener: addEventListenerSpy,
       },
     ]);
-    const reviewCommentsTextAreaSpy = { value: "" };
+    const dispatchEventSpy = jest.fn();
+    const reviewCommentsTextAreaSpy = { value: "", dispatchEvent: dispatchEventSpy };
     querySelectorSpy.mockReturnValue(reviewCommentsTextAreaSpy);
     getReviewMessageSpy.mockReturnValue("LGTM!");
 
@@ -53,6 +54,11 @@ describe("start - new github ui", () => {
     );
     expect(getReviewMessageSpy).toHaveBeenCalledTimes(1);
     expect(reviewCommentsTextAreaSpy.value).toBe("LGTM!");
+    expect(dispatchEventSpy).toHaveBeenCalledTimes(2);
+    expect(dispatchEventSpy.mock.calls[0][0].type).toBe("input");
+    expect(dispatchEventSpy.mock.calls[0][0].bubbles).toBe(true);
+    expect(dispatchEventSpy.mock.calls[1][0].type).toBe("change");
+    expect(dispatchEventSpy.mock.calls[1][0].bubbles).toBe(true);
   });
 
   test("should not add event listener if radio buttons are missing", () => {

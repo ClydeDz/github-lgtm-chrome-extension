@@ -1,5 +1,29 @@
 import * as utilModule from "./util";
 
+const updateTextareaValue = (textarea, value) => {
+  const prototype = typeof HTMLTextAreaElement !== "undefined" ? HTMLTextAreaElement.prototype : null;
+  const nativeValueSetter = prototype ? Object.getOwnPropertyDescriptor(prototype, "value")?.set : null;
+  
+  let success = false;
+  if (nativeValueSetter && typeof HTMLTextAreaElement !== "undefined" && textarea instanceof HTMLTextAreaElement) {
+    try {
+      nativeValueSetter.call(textarea, value);
+      success = true;
+    } catch (e) {
+      // Fallback
+    }
+  }
+
+  if (!success) {
+    textarea.value = value;
+  }
+
+  if (typeof textarea.dispatchEvent === "function") {
+    textarea.dispatchEvent(new Event("input", { bubbles: true }));
+    textarea.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+};
+
 const runOldGitHubUi = (doc, approveButton) => {
   if (!approveButton) return;
 
@@ -10,7 +34,7 @@ const runOldGitHubUi = (doc, approveButton) => {
 
     if (!reviewCommentsTextArea) return;
 
-    reviewCommentsTextArea.value = utilModule.getReviewMessage();
+    updateTextareaValue(reviewCommentsTextArea, utilModule.getReviewMessage());
   });
 };
 
@@ -26,7 +50,7 @@ const runNewGitHubUi = (doc, radios) => {
 
         if (!reviewCommentsTextArea) return;
 
-        reviewCommentsTextArea.value = utilModule.getReviewMessage();
+        updateTextareaValue(reviewCommentsTextArea, utilModule.getReviewMessage());
       }
     });
   });
@@ -45,3 +69,4 @@ export function start(injectedDocument) {
 
   runNewGitHubUi(doc, radios);
 }
+
