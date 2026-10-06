@@ -354,4 +354,65 @@ describe("options page", () => {
       messages: DEFAULT_MESSAGES,
     });
   });
+
+  test("should never let an older save overwrite a newer one", async () => {
+    const chromeMock = createChromeMock({ messages: ["A", "B"] });
+    let resolveFirstWrite;
+    chromeMock.storage.sync.set = jest
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            resolveFirstWrite = resolve;
+          })
+      )
+      .mockResolvedValue(undefined);
+    loadOptionsPage(chromeMock);
+    await flush();
+
+    jest.useFakeTimers();
+
+    // Start the first save and keep it in flight.
+    const input = getInputs()[0];
+    input.value = "Edited";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    await jest.advanceTimersByTimeAsync(1000);
+    expect(chromeMock.storage.sync.set).toHaveBeenCalledTimes(1);
+
+    // While that write is still in flight, remove the second message.
+    document.querySelectorAll("#messages li button")[1].click();
+
+    // The newer write must wait for the older one instead of racing it.
+    expect(chromeMock.storage.sync.set).toHaveBeenCalledTimes(1);
+
+    resolveFirstWrite();
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+
+    expect(chromeMock.storage.sync.set).toHaveBeenCalledTimes(2);
+    expect(chromeMock.storage.sync.set).toHaveBeenNthCalledWith(1, {
+      messages: ["Edited", "B"],
+    });
+    expect(chromeMock.storage.sync.set).toHaveBeenNthCalledWith(2, {
+      messages: ["Edited"],
+    });
+  });
+
+  test("should show an error when the messages fail to load", async () => {
+    const chromeMock = createChromeMock();
+    Object.defineProperty(chromeMock, "storage", {
+      get() {
+        throw new Error("Storage unavailable");
+      },
+    });
+    loadOptionsPage(chromeMock);
+    await flush();
+
+    expect(document.getElementById("status").textContent).toContain(
+      "Could not load"
+    );
+    expect(document.getElementById("status").classList.contains("error")).toBe(
+      true
+    );
+    expect(getInputs()).toHaveLength(0);
+  });
 });

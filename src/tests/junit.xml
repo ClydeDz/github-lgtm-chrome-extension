@@ -1,37 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="50" failures="0" errors="0" time="8.47">
-  <testsuite name="start - author placeholder" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:47" time="3.641" tests="8">
-    <testcase classname="start - author placeholder should fill the message with the PR author&apos;s username" name="start - author placeholder should fill the message with the PR author&apos;s username" time="0.02">
+<testsuites name="jest tests" tests="54" failures="0" errors="0" time="7.233">
+  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="2.632" tests="7">
+    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.018">
     </testcase>
-    <testcase classname="start - author placeholder should fall back to the comment avatar&apos;s alt text" name="start - author placeholder should fall back to the comment avatar&apos;s alt text" time="0.001">
+    <testcase classname="util applyPlaceholders should replace the exported AUTHOR_PLACEHOLDER constant" name="util applyPlaceholders should replace the exported AUTHOR_PLACEHOLDER constant" time="0.001">
     </testcase>
-    <testcase classname="start - author placeholder should leave the placeholder when the author cannot be found" name="start - author placeholder should leave the placeholder when the author cannot be found" time="0.002">
+    <testcase classname="util applyPlaceholders should replace &lt;AUTHOR&gt; with the tagged username" name="util applyPlaceholders should replace &lt;AUTHOR&gt; with the tagged username" time="0.001">
     </testcase>
-    <testcase classname="start - author placeholder should prefer the author from the page&apos;s embedded JSON" name="start - author placeholder should prefer the author from the page&apos;s embedded JSON" time="0.001">
+    <testcase classname="util applyPlaceholders should replace every occurrence, ignoring case" name="util applyPlaceholders should replace every occurrence, ignoring case" time="0.001">
+    </testcase>
+    <testcase classname="util applyPlaceholders should not double-tag an author that already has an @" name="util applyPlaceholders should not double-tag an author that already has an @" time="0.001">
+    </testcase>
+    <testcase classname="util applyPlaceholders should leave the placeholder untouched when the author is unknown" name="util applyPlaceholders should leave the placeholder untouched when the author is unknown" time="0">
+    </testcase>
+    <testcase classname="util applyPlaceholders should return messages without placeholders unchanged" name="util applyPlaceholders should return messages without placeholders unchanged" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="start - old github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="2.651" tests="4">
+    <testcase classname="start - old github ui should execute happy path" name="start - old github ui should execute happy path" time="0.026">
+    </testcase>
+    <testcase classname="start - old github ui should not add event listener if approve button is missing" name="start - old github ui should not add event listener if approve button is missing" time="0.002">
+    </testcase>
+    <testcase classname="start - old github ui should set review comments value on click" name="start - old github ui should set review comments value on click" time="0.001">
+    </testcase>
+    <testcase classname="start - old github ui should not set value if review comments textarea is missing" name="start - old github ui should not set value if review comments textarea is missing" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="start - new github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="2.681" tests="4">
+    <testcase classname="start - new github ui should execute happy path" name="start - new github ui should execute happy path" time="0.02">
+    </testcase>
+    <testcase classname="start - new github ui should not add event listener if radio buttons are missing" name="start - new github ui should not add event listener if radio buttons are missing" time="0.001">
+    </testcase>
+    <testcase classname="start - new github ui should not add comments if comment radio button is clicked" name="start - new github ui should not add comments if comment radio button is clicked" time="0.002">
+    </testcase>
+    <testcase classname="start - new github ui should not set value if review comments textarea is missing" name="start - new github ui should not set value if review comments textarea is missing" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="start - author placeholder" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="2.683" tests="8">
+    <testcase classname="start - author placeholder should fill the message with the PR author&apos;s username" name="start - author placeholder should fill the message with the PR author&apos;s username" time="0.021">
+    </testcase>
+    <testcase classname="start - author placeholder should fall back to the comment avatar&apos;s alt text" name="start - author placeholder should fall back to the comment avatar&apos;s alt text" time="0.002">
+    </testcase>
+    <testcase classname="start - author placeholder should leave the placeholder when the author cannot be found" name="start - author placeholder should leave the placeholder when the author cannot be found" time="0.001">
+    </testcase>
+    <testcase classname="start - author placeholder should prefer the author from the page&apos;s embedded JSON" name="start - author placeholder should prefer the author from the page&apos;s embedded JSON" time="0.002">
     </testcase>
     <testcase classname="start - author placeholder should fall back to the DOM when the embedded JSON is broken" name="start - author placeholder should fall back to the DOM when the embedded JSON is broken" time="0.001">
     </testcase>
-    <testcase classname="getPullRequestAuthor should return null when the document has no querySelector" name="getPullRequestAuthor should return null when the document has no querySelector" time="0">
+    <testcase classname="getPullRequestAuthor should return null when the document has no querySelector" name="getPullRequestAuthor should return null when the document has no querySelector" time="0.001">
     </testcase>
     <testcase classname="getPullRequestAuthor should return null when no author is on the page" name="getPullRequestAuthor should return null when no author is on the page" time="0.001">
     </testcase>
     <testcase classname="getPullRequestAuthor should read the login from the author link&apos;s href when it has no text" name="getPullRequestAuthor should read the login from the author link&apos;s href when it has no text" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="util - messages storage" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:48" time="3.647" tests="10">
-    <testcase classname="util - messages storage normalizeMessages should keep only non-empty strings and trim them" name="util - messages storage normalizeMessages should keep only non-empty strings and trim them" time="0.02">
+  <testsuite name="util - messages storage" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="2.712" tests="12">
+    <testcase classname="util - messages storage normalizeMessages should keep only non-empty strings and trim them" name="util - messages storage normalizeMessages should keep only non-empty strings and trim them" time="0.019">
     </testcase>
     <testcase classname="util - messages storage normalizeMessages should return an empty list for non-array values" name="util - messages storage normalizeMessages should return an empty list for non-array values" time="0.001">
     </testcase>
-    <testcase classname="util - messages storage loadMessages should return the defaults when sync storage is unavailable" name="util - messages storage loadMessages should return the defaults when sync storage is unavailable" time="0.003">
+    <testcase classname="util - messages storage loadMessages should return the defaults when sync storage is unavailable" name="util - messages storage loadMessages should return the defaults when sync storage is unavailable" time="0.002">
     </testcase>
-    <testcase classname="util - messages storage loadMessages should return the defaults when nothing is saved yet" name="util - messages storage loadMessages should return the defaults when nothing is saved yet" time="0.003">
+    <testcase classname="util - messages storage loadMessages should return the defaults when nothing is saved yet" name="util - messages storage loadMessages should return the defaults when nothing is saved yet" time="0.002">
+    </testcase>
+    <testcase classname="util - messages storage loadMessages should return the defaults when reading storage fails" name="util - messages storage loadMessages should return the defaults when reading storage fails" time="0.026">
     </testcase>
     <testcase classname="util - messages storage loadMessages should return the saved, cleaned list" name="util - messages storage loadMessages should return the saved, cleaned list" time="0.001">
     </testcase>
     <testcase classname="util - messages storage saveMessages should write the cleaned list to chrome.storage.sync" name="util - messages storage saveMessages should write the cleaned list to chrome.storage.sync" time="0.002">
     </testcase>
-    <testcase classname="util - messages storage saveMessages should reject when sync storage is unavailable" name="util - messages storage saveMessages should reject when sync storage is unavailable" time="0.036">
+    <testcase classname="util - messages storage saveMessages should reject when sync storage is unavailable" name="util - messages storage saveMessages should reject when sync storage is unavailable" time="0.01">
     </testcase>
     <testcase classname="util - messages storage initMessages should pick a random message from the saved list" name="util - messages storage initMessages should pick a random message from the saved list" time="0.002">
     </testcase>
@@ -39,77 +77,47 @@
     </testcase>
     <testcase classname="util - messages storage initMessages should return an empty message when every message was removed" name="util - messages storage initMessages should return an empty message when every message was removed" time="0.001">
     </testcase>
-  </testsuite>
-  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:48" time="3.626" tests="7">
-    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.017">
-    </testcase>
-    <testcase classname="util applyPlaceholders should replace the exported AUTHOR_PLACEHOLDER constant" name="util applyPlaceholders should replace the exported AUTHOR_PLACEHOLDER constant" time="0.001">
-    </testcase>
-    <testcase classname="util applyPlaceholders should replace &lt;AUTHOR&gt; with the tagged username" name="util applyPlaceholders should replace &lt;AUTHOR&gt; with the tagged username" time="0.001">
-    </testcase>
-    <testcase classname="util applyPlaceholders should replace every occurrence, ignoring case" name="util applyPlaceholders should replace every occurrence, ignoring case" time="0">
-    </testcase>
-    <testcase classname="util applyPlaceholders should not double-tag an author that already has an @" name="util applyPlaceholders should not double-tag an author that already has an @" time="0">
-    </testcase>
-    <testcase classname="util applyPlaceholders should leave the placeholder untouched when the author is unknown" name="util applyPlaceholders should leave the placeholder untouched when the author is unknown" time="0">
-    </testcase>
-    <testcase classname="util applyPlaceholders should return messages without placeholders unchanged" name="util applyPlaceholders should return messages without placeholders unchanged" time="0.001">
+    <testcase classname="util - messages storage initMessages should keep the loaded messages when the change listener fails" name="util - messages storage initMessages should keep the loaded messages when the change listener fails" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="start - old github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:48" time="3.65" tests="4">
-    <testcase classname="start - old github ui should execute happy path" name="start - old github ui should execute happy path" time="0.023">
+  <testsuite name="options page" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:30:44" time="3.333" tests="19">
+    <testcase classname="options page should render the default messages when nothing is saved" name="options page should render the default messages when nothing is saved" time="0.098">
     </testcase>
-    <testcase classname="start - old github ui should not add event listener if approve button is missing" name="start - old github ui should not add event listener if approve button is missing" time="0.002">
+    <testcase classname="options page should render the saved messages" name="options page should render the saved messages" time="0.025">
     </testcase>
-    <testcase classname="start - old github ui should set review comments value on click" name="start - old github ui should set review comments value on click" time="0.003">
+    <testcase classname="options page should add and remove messages" name="options page should add and remove messages" time="0.058">
     </testcase>
-    <testcase classname="start - old github ui should not set value if review comments textarea is missing" name="start - old github ui should not set value if review comments textarea is missing" time="0.001">
+    <testcase classname="options page should show the empty hint when the last message is removed" name="options page should show the empty hint when the last message is removed" time="0.022">
     </testcase>
-  </testsuite>
-  <testsuite name="start - new github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:48" time="3.656" tests="4">
-    <testcase classname="start - new github ui should execute happy path" name="start - new github ui should execute happy path" time="0.024">
+    <testcase classname="options page should autosave once typing stops" name="options page should autosave once typing stops" time="0.031">
     </testcase>
-    <testcase classname="start - new github ui should not add event listener if radio buttons are missing" name="start - new github ui should not add event listener if radio buttons are missing" time="0.001">
+    <testcase classname="options page should show an error when autosaving fails" name="options page should show an error when autosaving fails" time="0.062">
     </testcase>
-    <testcase classname="start - new github ui should not add comments if comment radio button is clicked" name="start - new github ui should not add comments if comment radio button is clicked" time="0.001">
+    <testcase classname="options page should retry a failed save up to 3 attempts, then give up" name="options page should retry a failed save up to 3 attempts, then give up" time="0.074">
     </testcase>
-    <testcase classname="start - new github ui should not set value if review comments textarea is missing" name="start - new github ui should not set value if review comments textarea is missing" time="0.001">
+    <testcase classname="options page should stop retrying once a save succeeds" name="options page should stop retrying once a save succeeds" time="0.032">
     </testcase>
-  </testsuite>
-  <testsuite name="options page" errors="0" failures="0" skipped="0" timestamp="2026-10-06T10:14:48" time="4.395" tests="17">
-    <testcase classname="options page should render the default messages when nothing is saved" name="options page should render the default messages when nothing is saved" time="0.231">
+    <testcase classname="options page should restart the retry budget after a fresh edit" name="options page should restart the retry budget after a fresh edit" time="0.062">
     </testcase>
-    <testcase classname="options page should render the saved messages" name="options page should render the saved messages" time="0.019">
+    <testcase classname="options page should flush pending edits when the popup closes" name="options page should flush pending edits when the popup closes" time="0.017">
     </testcase>
-    <testcase classname="options page should add and remove messages" name="options page should add and remove messages" time="0.032">
+    <testcase classname="options page should insert the author tag at the cursor" name="options page should insert the author tag at the cursor" time="0.015">
     </testcase>
-    <testcase classname="options page should show the empty hint when the last message is removed" name="options page should show the empty hint when the last message is removed" time="0.031">
+    <testcase classname="options page should append the author tag to the last message when nothing is focused" name="options page should append the author tag to the last message when nothing is focused" time="0.014">
     </testcase>
-    <testcase classname="options page should autosave once typing stops" name="options page should autosave once typing stops" time="0.046">
+    <testcase classname="options page should add a row with the author tag when the list is empty" name="options page should add a row with the author tag when the list is empty" time="0.031">
     </testcase>
-    <testcase classname="options page should show an error when autosaving fails" name="options page should show an error when autosaving fails" time="0.06">
+    <testcase classname="options page should restore the default messages on the second click" name="options page should restore the default messages on the second click" time="0.016">
     </testcase>
-    <testcase classname="options page should retry a failed save up to 3 attempts, then give up" name="options page should retry a failed save up to 3 attempts, then give up" time="0.083">
+    <testcase classname="options page should cancel an armed restore after a few seconds" name="options page should cancel an armed restore after a few seconds" time="0.016">
     </testcase>
-    <testcase classname="options page should stop retrying once a save succeeds" name="options page should stop retrying once a save succeeds" time="0.031">
+    <testcase classname="options page should cancel an armed restore when the list is edited" name="options page should cancel an armed restore when the list is edited" time="0.014">
     </testcase>
-    <testcase classname="options page should restart the retry budget after a fresh edit" name="options page should restart the retry budget after a fresh edit" time="0.061">
+    <testcase classname="options page should cancel an armed restore when another button saves" name="options page should cancel an armed restore when another button saves" time="0.018">
     </testcase>
-    <testcase classname="options page should flush pending edits when the popup closes" name="options page should flush pending edits when the popup closes" time="0.018">
+    <testcase classname="options page should never let an older save overwrite a newer one" name="options page should never let an older save overwrite a newer one" time="0.045">
     </testcase>
-    <testcase classname="options page should insert the author tag at the cursor" name="options page should insert the author tag at the cursor" time="0.021">
-    </testcase>
-    <testcase classname="options page should append the author tag to the last message when nothing is focused" name="options page should append the author tag to the last message when nothing is focused" time="0.015">
-    </testcase>
-    <testcase classname="options page should add a row with the author tag when the list is empty" name="options page should add a row with the author tag when the list is empty" time="0.024">
-    </testcase>
-    <testcase classname="options page should restore the default messages on the second click" name="options page should restore the default messages on the second click" time="0.017">
-    </testcase>
-    <testcase classname="options page should cancel an armed restore after a few seconds" name="options page should cancel an armed restore after a few seconds" time="0.032">
-    </testcase>
-    <testcase classname="options page should cancel an armed restore when the list is edited" name="options page should cancel an armed restore when the list is edited" time="0.012">
-    </testcase>
-    <testcase classname="options page should cancel an armed restore when another button saves" name="options page should cancel an armed restore when another button saves" time="0.016">
+    <testcase classname="options page should show an error when the messages fail to load" name="options page should show an error when the messages fail to load" time="0.037">
     </testcase>
   </testsuite>
 </testsuites>

@@ -24,6 +24,7 @@ let lastFocusedInput = null;
 let saveAttempts = 0;
 let restoreArmed = false;
 let restoreTimer = null;
+let pendingWrite = null;
 
 function showStatus(text, isError) {
   status.textContent = text;
@@ -83,6 +84,21 @@ function scheduleSave() {
   saveTimer = setTimeout(flushSave, SAVE_DEBOUNCE_MS);
 }
 
+// Writes are chained so overlapping saves can't land out of order: an older
+// snapshot must never overwrite a newer one. With nothing in flight the
+// write starts synchronously, so callers still see it immediately.
+function queueSave(messages) {
+  const start = pendingWrite
+    ? pendingWrite.then(() => saveMessages(messages))
+    : saveMessages(messages);
+
+  pendingWrite = start.then(
+    () => undefined,
+    () => undefined
+  );
+  return start;
+}
+
 async function flushSave() {
   clearTimeout(saveTimer);
   saveTimer = null;
@@ -91,7 +107,7 @@ async function flushSave() {
   dirty = false;
 
   try {
-    const saved = await saveMessages(getMessagesFromForm());
+    const saved = await queueSave(getMessagesFromForm());
     saveAttempts = 0;
     showStatus(
       `Saved ${saved.length} message${saved.length === 1 ? "" : "s"}.`,

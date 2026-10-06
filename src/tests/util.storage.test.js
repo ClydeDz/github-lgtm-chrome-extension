@@ -61,6 +61,16 @@ describe("util - messages storage", () => {
       expect(await loadMessages()).toEqual(DEFAULT_MESSAGES);
     });
 
+    test("should return the defaults when reading storage fails", async () => {
+      const mock = createChromeMock();
+      mock.chrome.storage.sync.get = jest
+        .fn()
+        .mockRejectedValue(new Error("Corrupt storage"));
+      global.chrome = mock.chrome;
+
+      expect(await loadMessages()).toEqual(DEFAULT_MESSAGES);
+    });
+
     test("should return the saved, cleaned list", async () => {
       global.chrome = createChromeMock({ messages: ["Custom", "  "] }).chrome;
 
@@ -126,6 +136,18 @@ describe("util - messages storage", () => {
       await initMessages();
 
       expect(getReviewMessage()).toBe("");
+    });
+
+    test("should keep the loaded messages when the change listener fails", async () => {
+      const mock = createChromeMock({ messages: ["Fresh"] });
+      mock.chrome.storage.onChanged.addListener = jest.fn(() => {
+        throw new Error("Listener rejected");
+      });
+      global.chrome = mock.chrome;
+
+      await initMessages();
+
+      expect(getReviewMessage()).toBe("Fresh");
     });
   });
 });
