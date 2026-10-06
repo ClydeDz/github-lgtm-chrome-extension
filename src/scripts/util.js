@@ -10,6 +10,7 @@ export const DEFAULT_MESSAGES = [
   "Great instincts — nice work!",
   "Clean, clever, approved!",
   "Approved before my coffee cooled ☕",
+  "Nice work, <AUTHOR>",
 ];
 
 const STORAGE_KEY = "messages";
@@ -84,13 +85,24 @@ export async function initMessages() {
   } catch (error) {
     console.info("⚠️ GitHub LGTM: Could not initialise messages.", error);
   }
-}
-
-export function getReviewMessage() {
+}export function getReviewMessage() {
   // An empty list means the user removed every message, so nothing is added.
-  if (!Array.isArray(currentMessages) || currentMessages.length === 0)
-    return "";
+  if (!Array.isArray(currentMessages) || currentMessages.length === 0) return "";
 
   var index = Math.floor(Math.random() * currentMessages.length);
   return currentMessages[index];
+}
+
+// Replaces the <AUTHOR> placeholder with the PR author's tagged username,
+// e.g. "Nice work, <AUTHOR>" becomes "Nice work, @john-paul". When the
+// author is unknown the placeholder is left untouched so the user can see
+// it and fill it in before submitting.
+export function applyPlaceholders(message, author) {
+  if (typeof message !== "string") return message;
+  if (!author) return message;
+
+  const login = String(author).replace(/^@/, "");
+  if (!login) return message;
+
+  return message.replace(/<author>/gi, `@${login}`);
 }

@@ -12,6 +12,8 @@ Give it a try and let me know what you think!
 
 Don't like the built-in messages? Right-click the extension icon and choose **Options** to add, edit or remove them — one is picked at random each time you approve. Your list is saved with Chrome sync, which is the only storage this extension uses.
 
+Messages can also contain the `<AUTHOR>` placeholder, which is replaced with the pull request author's @username — for example “Nice work, `<AUTHOR>`” becomes “Nice work, @john-paul”.
+
 ## Credits
 
 Developed by [Clyde D'Souza](https://clydedsouza.net/)

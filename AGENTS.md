@@ -6,7 +6,7 @@ Guidance for AI agents (and humans) working in this repository.
 
 **GitHub LGTM** is a Chrome extension (Manifest V3). When a user clicks **Approve** on a GitHub pull request, the extension fills the review comment box with a randomly chosen pre-defined message (e.g. `"Ship it! 🚢"`), so the user never has to type an approval comment.
 
-- The list of messages is editable on the extension's options page (add / edit / remove).
+- The list of messages is editable on the extension's options page (add / edit / remove), and may contain a `<AUTHOR>` placeholder that expands to the PR author's @username.
 - The extension always picks **one message at random** from the saved list.
 - `chrome.storage.sync` is the extension's **only** persistent storage — there is no backend, no localStorage and no IndexedDB.
 - Plain JavaScript throughout: no framework, no TypeScript, no linter/formatter.
@@ -53,7 +53,8 @@ Node 20+ (CI pins Node 20; currently developed on Node 22).
    - **New UI**: `input[name="reviewEvent"]` radios (only when the value is `approve`) + `textarea[placeholder="Leave a comment"]`.
    - The textarea value is written through the native value setter and followed by dispatched `input` + `change` events, so GitHub's UI notices the change.
 3. On Approve, `getReviewMessage()` in `util.js` returns a **random** entry from the cached list. An empty list (the user removed every message) returns `""`, i.e. nothing is typed.
-4. `options.js` renders the list and, on **Save**, writes it back via `saveMessages()` → `chrome.storage.sync`. A `chrome.storage.onChanged` listener in the content script refreshes its cache immediately, so already-open tabs pick up edits.
+4. Before the text is written, `applyPlaceholders()` substitutes the `<AUTHOR>` placeholder with the PR author's `@username` (e.g. `"Nice work, <AUTHOR>"` → `"Nice work, @john-paul"`). The login comes from `getPullRequestAuthor()` in `start.js`, in order: `pullRequest.author.login` from the page's embedded `react-app.embeddedData` JSON (authoritative — verified on a live PR), then the first `a.author` link (the PR description comment is always posted by the author), then an `alt="@login"` avatar inside a comment header. If nothing resolves the placeholder is left as-is. (There is **no** meta tag for the PR author — `octolytics-dimension-user_login` is the *viewer*, never use it.)
+5. `options.js` renders the list and, on **Save**, writes it back via `saveMessages()` → `chrome.storage.sync`. A `chrome.storage.onChanged` listener in the content script refreshes its cache immediately, so already-open tabs pick up edits.
 
 ## Storage contract (important)
 
