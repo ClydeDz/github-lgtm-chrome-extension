@@ -1,4 +1,8 @@
-import { applyPlaceholders, getReviewMessage } from "../scripts/util";
+import {
+  applyPlaceholders,
+  AUTHOR_PLACEHOLDER,
+  getReviewMessage,
+} from "../scripts/util";
 
 describe("util", () => {
   describe("getReviewMessage", () => {
@@ -10,6 +14,13 @@ describe("util", () => {
   });
 
   describe("applyPlaceholders", () => {
+    test("should replace the exported AUTHOR_PLACEHOLDER constant", () => {
+      const message = `Nice work, ${AUTHOR_PLACEHOLDER}`;
+      expect(applyPlaceholders(message, "john-paul")).toBe(
+        "Nice work, @john-paul"
+      );
+    });
+
     test("should replace <AUTHOR> with the tagged username", () => {
       expect(applyPlaceholders("Nice work, <AUTHOR>", "john-paul")).toBe(
         "Nice work, @john-paul"

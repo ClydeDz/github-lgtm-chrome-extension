@@ -1,17 +1,32 @@
 export const DEFAULT_MESSAGES = [
   "Ship it! 🚢",
   "Zero notes — approved!",
-  "You nailed it 🎯",
+  "You nailed it, <AUTHOR> 🎯",
   "Looks good to me, nice work! ✅",
   "Merge-tastic!",
-  "Approved with style 😎",
+  "<AUTHOR>, approved with style 😎",
   "Gold star ⭐",
   "Go go go! 🏎️",
   "Great instincts — nice work!",
   "Clean, clever, approved!",
   "Approved before my coffee cooled ☕",
   "Nice work, <AUTHOR>",
+  "Green light from me 🟢",
+  "Approved. Onward! 🧭",
+  "Reads beautifully. Good to go!",
+  "Strong work. Ship it whenever you're ready!",
 ];
+
+// Placeholder that applyPlaceholders() expands to the PR author's @username.
+export const AUTHOR_PLACEHOLDER = "<AUTHOR>";
+
+// Matches AUTHOR_PLACEHOLDER case-insensitively; derived from the exported
+// constant so its spelling only ever changes in one place. Regex-special
+// characters are escaped so the match stays literal.
+const AUTHOR_PLACEHOLDER_PATTERN = new RegExp(
+  AUTHOR_PLACEHOLDER.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  "gi"
+);
 
 const STORAGE_KEY = "messages";
 
@@ -85,9 +100,11 @@ export async function initMessages() {
   } catch (error) {
     console.info("⚠️ GitHub LGTM: Could not initialise messages.", error);
   }
-}export function getReviewMessage() {
+}
+export function getReviewMessage() {
   // An empty list means the user removed every message, so nothing is added.
-  if (!Array.isArray(currentMessages) || currentMessages.length === 0) return "";
+  if (!Array.isArray(currentMessages) || currentMessages.length === 0)
+    return "";
 
   var index = Math.floor(Math.random() * currentMessages.length);
   return currentMessages[index];
@@ -104,5 +121,5 @@ export function applyPlaceholders(message, author) {
   const login = String(author).replace(/^@/, "");
   if (!login) return message;
 
-  return message.replace(/<author>/gi, `@${login}`);
+  return message.replace(AUTHOR_PLACEHOLDER_PATTERN, `@${login}`);
 }
