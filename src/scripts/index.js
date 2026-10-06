@@ -1,4 +1,9 @@
 import * as startModule from "./start";
+import * as utilModule from "./util";
+
+// Load the user's customised message list from chrome.storage.sync as soon
+// as the content script runs. It stays fresh via chrome.storage.onChanged.
+utilModule.initMessages();
 
 const intervalId = setInterval(async function () {
   try {

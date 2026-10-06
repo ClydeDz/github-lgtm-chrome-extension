@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GitHub LGTM – Options</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #ffffff;
+        --fg: #1f2328;
+        --muted: #656d76;
+        --border: #d0d7de;
+        --accent: #1a7f37;
+        --error: #cf222e;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d1117;
+          --fg: #e6edf3;
+          --muted: #8b949e;
+          --border: #30363d;
+          --accent: #3fb950;
+          --error: #f85149;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 16px 20px 20px;
+        width: 420px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+          Arial, sans-serif;
+      }
+
+      h1 {
+        margin: 0 0 4px;
+        font-size: 16px;
+      }
+
+      p {
+        margin: 0 0 12px;
+        color: var(--muted);
+      }
+
+      ul {
+        margin: 0 0 8px;
+        padding: 0;
+        list-style: none;
+      }
+
+      li {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      li input {
+        flex: 1;
+        min-width: 0;
+        padding: 6px 8px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+
+      li input:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: -1px;
+      }
+
+      button {
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+        cursor: pointer;
+      }
+
+      button:hover {
+        border-color: var(--accent);
+      }
+
+      button.primary {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #ffffff;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+
+      #emptyHint {
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+
+      #actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      #status {
+        color: var(--accent);
+      }
+
+      #status.error {
+        color: var(--error);
+      }
+
+      .note {
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GitHub LGTM</h1>
+    <p>
+      Edit the messages the extension can add when you approve a pull request.
+      One is picked at random each time.
+    </p>
+
+    <ul id="messages"></ul>
+    <p id="emptyHint" hidden>
+      No messages saved &mdash; the extension won't add any comment.
+    </p>
+
+    <div id="actions">
+      <button id="addMessage" type="button">Add message</button>
+      <button id="save" class="primary" type="button">Save</button>
+      <span id="status" role="status" aria-live="polite"></span>
+    </div>
+
+    <p class="note">
+      Your messages are saved with Chrome's sync storage
+      (<code>chrome.storage.sync</code>), so they follow your Chrome profile.
+      This is the only storage the extension uses &mdash; no other persistent
+      storage (local or remote) is available.
+    </p>
+
+    <script src="options.js"></script>
+  </body>
+</html>

@@ -1,27 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="9" failures="0" errors="0" time="3.629">
-  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2026-07-18T23:04:08" time="1.465" tests="1">
-    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.012">
-    </testcase>
-  </testsuite>
-  <testsuite name="start - new github ui" errors="0" failures="0" skipped="0" timestamp="2026-07-18T23:04:08" time="1.499" tests="4">
-    <testcase classname="start - new github ui should execute happy path" name="start - new github ui should execute happy path" time="0.016">
+<testsuites name="jest tests" tests="25" failures="0" errors="0" time="4.554">
+  <testsuite name="start - new github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T05:00:52" time="2.237" tests="4">
+    <testcase classname="start - new github ui should execute happy path" name="start - new github ui should execute happy path" time="0.018">
     </testcase>
     <testcase classname="start - new github ui should not add event listener if radio buttons are missing" name="start - new github ui should not add event listener if radio buttons are missing" time="0.001">
     </testcase>
     <testcase classname="start - new github ui should not add comments if comment radio button is clicked" name="start - new github ui should not add comments if comment radio button is clicked" time="0.001">
     </testcase>
-    <testcase classname="start - new github ui should not set value if review comments textarea is missing" name="start - new github ui should not set value if review comments textarea is missing" time="0">
+    <testcase classname="start - new github ui should not set value if review comments textarea is missing" name="start - new github ui should not set value if review comments textarea is missing" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="start - old github ui" errors="0" failures="0" skipped="0" timestamp="2026-07-18T23:04:08" time="1.5" tests="4">
-    <testcase classname="start - old github ui should execute happy path" name="start - old github ui should execute happy path" time="0.015">
+  <testsuite name="util" errors="0" failures="0" skipped="0" timestamp="2026-10-06T05:00:52" time="2.241" tests="1">
+    <testcase classname="util getReviewMessage should return a review message" name="util getReviewMessage should return a review message" time="0.015">
+    </testcase>
+  </testsuite>
+  <testsuite name="start - old github ui" errors="0" failures="0" skipped="0" timestamp="2026-10-06T05:00:52" time="2.309" tests="4">
+    <testcase classname="start - old github ui should execute happy path" name="start - old github ui should execute happy path" time="0.016">
     </testcase>
     <testcase classname="start - old github ui should not add event listener if approve button is missing" name="start - old github ui should not add event listener if approve button is missing" time="0.001">
     </testcase>
-    <testcase classname="start - old github ui should set review comments value on click" name="start - old github ui should set review comments value on click" time="0.001">
+    <testcase classname="start - old github ui should set review comments value on click" name="start - old github ui should set review comments value on click" time="0.002">
     </testcase>
     <testcase classname="start - old github ui should not set value if review comments textarea is missing" name="start - old github ui should not set value if review comments textarea is missing" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="util - messages storage" errors="0" failures="0" skipped="0" timestamp="2026-10-06T05:00:52" time="2.31" tests="10">
+    <testcase classname="util - messages storage normalizeMessages should keep only non-empty strings and trim them" name="util - messages storage normalizeMessages should keep only non-empty strings and trim them" time="0.013">
+    </testcase>
+    <testcase classname="util - messages storage normalizeMessages should return an empty list for non-array values" name="util - messages storage normalizeMessages should return an empty list for non-array values" time="0.001">
+    </testcase>
+    <testcase classname="util - messages storage loadMessages should return the defaults when sync storage is unavailable" name="util - messages storage loadMessages should return the defaults when sync storage is unavailable" time="0.001">
+    </testcase>
+    <testcase classname="util - messages storage loadMessages should return the defaults when nothing is saved yet" name="util - messages storage loadMessages should return the defaults when nothing is saved yet" time="0.002">
+    </testcase>
+    <testcase classname="util - messages storage loadMessages should return the saved, cleaned list" name="util - messages storage loadMessages should return the saved, cleaned list" time="0.001">
+    </testcase>
+    <testcase classname="util - messages storage saveMessages should write the cleaned list to chrome.storage.sync" name="util - messages storage saveMessages should write the cleaned list to chrome.storage.sync" time="0.002">
+    </testcase>
+    <testcase classname="util - messages storage saveMessages should reject when sync storage is unavailable" name="util - messages storage saveMessages should reject when sync storage is unavailable" time="0.02">
+    </testcase>
+    <testcase classname="util - messages storage initMessages should pick a random message from the saved list" name="util - messages storage initMessages should pick a random message from the saved list" time="0.002">
+    </testcase>
+    <testcase classname="util - messages storage initMessages should refresh the messages when they change in the options page" name="util - messages storage initMessages should refresh the messages when they change in the options page" time="0.002">
+    </testcase>
+    <testcase classname="util - messages storage initMessages should return an empty message when every message was removed" name="util - messages storage initMessages should return an empty message when every message was removed" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="options page" errors="0" failures="0" skipped="0" timestamp="2026-10-06T05:00:52" time="2.393" tests="6">
+    <testcase classname="options page should render the default messages when nothing is saved" name="options page should render the default messages when nothing is saved" time="0.08">
+    </testcase>
+    <testcase classname="options page should render the saved messages" name="options page should render the saved messages" time="0.015">
+    </testcase>
+    <testcase classname="options page should add and remove messages" name="options page should add and remove messages" time="0.017">
+    </testcase>
+    <testcase classname="options page should show the empty hint when the last message is removed" name="options page should show the empty hint when the last message is removed" time="0.013">
+    </testcase>
+    <testcase classname="options page should save the cleaned list to chrome.storage.sync" name="options page should save the cleaned list to chrome.storage.sync" time="0.016">
+    </testcase>
+    <testcase classname="options page should show an error when saving fails" name="options page should show an error when saving fails" time="0.027">
     </testcase>
   </testsuite>
 </testsuites>
