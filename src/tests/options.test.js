@@ -5,7 +5,7 @@ import { DEFAULT_MESSAGES } from "../scripts/util";
 const readOptionsBody = () => {
   const html = fs.readFileSync(
     path.resolve(__dirname, "../options.html"),
-    "utf8"
+    "utf8",
   );
   const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
   return match[1];
@@ -50,7 +50,7 @@ describe("options page", () => {
 
     expect(getInputs()).toHaveLength(DEFAULT_MESSAGES.length);
     expect(Array.from(getInputs()).map((input) => input.value)).toEqual(
-      DEFAULT_MESSAGES
+      DEFAULT_MESSAGES,
     );
     expect(document.getElementById("emptyHint").hidden).toBe(true);
   });
@@ -104,7 +104,7 @@ describe("options page", () => {
       messages: ["Updated", "Second"],
     });
     expect(document.getElementById("status").textContent).toContain(
-      "Saved 2 messages."
+      "Saved 2 messages.",
     );
   });
 
@@ -123,10 +123,10 @@ describe("options page", () => {
     await jest.advanceTimersByTimeAsync(1000);
 
     expect(document.getElementById("status").textContent).toContain(
-      "Couldn't save"
+      "Couldn't save",
     );
     expect(document.getElementById("status").classList.contains("error")).toBe(
-      true
+      true,
     );
   });
 
@@ -153,7 +153,7 @@ describe("options page", () => {
     await jest.advanceTimersByTimeAsync(1000); // third attempt fails
     expect(chromeMock.storage.sync.set).toHaveBeenCalledTimes(3);
     expect(document.getElementById("status").textContent).toContain(
-      "after 3 attempts"
+      "after 3 attempts",
     );
 
     await jest.advanceTimersByTimeAsync(5000);
@@ -179,7 +179,7 @@ describe("options page", () => {
 
     expect(chromeMock.storage.sync.set).toHaveBeenCalledTimes(3);
     expect(document.getElementById("status").textContent).toContain(
-      "Saved 1 message."
+      "Saved 1 message.",
     );
   });
 
@@ -285,7 +285,7 @@ describe("options page", () => {
 
     expect(getInputs()).toHaveLength(DEFAULT_MESSAGES.length);
     expect(Array.from(getInputs()).map((input) => input.value)).toEqual(
-      DEFAULT_MESSAGES
+      DEFAULT_MESSAGES,
     );
     expect(chromeMock.storage.sync.set).toHaveBeenCalledWith({
       messages: DEFAULT_MESSAGES,
@@ -364,7 +364,7 @@ describe("options page", () => {
         () =>
           new Promise((resolve) => {
             resolveFirstWrite = resolve;
-          })
+          }),
       )
       .mockResolvedValue(undefined);
     loadOptionsPage(chromeMock);
@@ -408,10 +408,10 @@ describe("options page", () => {
     await flush();
 
     expect(document.getElementById("status").textContent).toContain(
-      "Could not load"
+      "Could not load",
     );
     expect(document.getElementById("status").classList.contains("error")).toBe(
-      true
+      true,
     );
     expect(getInputs()).toHaveLength(0);
   });

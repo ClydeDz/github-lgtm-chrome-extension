@@ -9,17 +9,19 @@ Guidance for AI agents (and humans) working in this repository.
 - The list of messages is editable on the extension's options page (add / edit / remove), and may contain a `<AUTHOR>` placeholder that expands to the PR author's @username.
 - The extension always picks **one message at random** from the saved list.
 - `chrome.storage.sync` is the extension's **only** persistent storage — there is no backend, no localStorage and no IndexedDB.
-- Plain JavaScript throughout: no framework, no TypeScript, no linter/formatter.
+- Plain JavaScript throughout: no framework or TypeScript. Prettier provides formatting checks.
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm ci` | Install dependencies (CI uses this; use `npm install` only if adding a package) |
-| `npm run build` | Webpack in watch mode (development) |
-| `npm run build:prod` | One-off production build into `dist/` |
-| `npm test` | Run Jest once |
-| `npm run test:ci` | Jest with coverage + JUnit report (`src/tests/junit.xml`) — what CI runs |
+| Command              | Purpose                                                                         |
+| -------------------- | ------------------------------------------------------------------------------- |
+| `npm ci`             | Install dependencies (CI uses this; use `npm install` only if adding a package) |
+| `npm run build`      | Webpack in watch mode (development)                                             |
+| `npm run build:prod` | One-off production build into `dist/`                                           |
+| `npm run lint`       | Check formatting without changing files                                         |
+| `npm run lint:fix`   | Format supported text files with Prettier                                       |
+| `npm test`           | Run Jest once                                                                   |
+| `npm run test:ci`    | Jest with coverage + JUnit report (`src/tests/junit.xml`) — what CI runs        |
 
 Node 20+ (CI pins Node 20; currently developed on Node 22).
 
@@ -53,7 +55,7 @@ Node 20+ (CI pins Node 20; currently developed on Node 22).
    - **New UI**: `input[name="reviewEvent"]` radios (only when the value is `approve`) + `textarea[placeholder="Leave a comment"]`.
    - The textarea value is written through the native value setter and followed by dispatched `input` + `change` events, so GitHub's UI notices the change.
 3. On Approve, `getReviewMessage()` in `util.js` returns a **random** entry from the cached list. An empty list (the user removed every message) returns `""`, i.e. nothing is typed.
-4. Before the text is written, `applyPlaceholders()` substitutes the `<AUTHOR>` placeholder with the PR author's `@username` (e.g. `"Nice work, <AUTHOR>"` → `"Nice work, @john-paul"`). The login comes from `getPullRequestAuthor()` in `start.js`, in order: `pullRequest.author.login` from the page's embedded `react-app.embeddedData` JSON (authoritative — verified on a live PR), then the first `a.author` link (the PR description comment is always posted by the author), then an `alt="@login"` avatar inside a comment header. If nothing resolves the placeholder is left as-is. (There is **no** meta tag for the PR author — `octolytics-dimension-user_login` is the *viewer*, never use it.)
+4. Before the text is written, `applyPlaceholders()` substitutes the `<AUTHOR>` placeholder with the PR author's `@username` (e.g. `"Nice work, <AUTHOR>"` → `"Nice work, @john-paul"`). The login comes from `getPullRequestAuthor()` in `start.js`, in order: `pullRequest.author.login` from the page's embedded `react-app.embeddedData` JSON (authoritative — verified on a live PR), then the first `a.author` link (the PR description comment is always posted by the author), then an `alt="@login"` avatar inside a comment header. If nothing resolves the placeholder is left as-is. (There is **no** meta tag for the PR author — `octolytics-dimension-user_login` is the _viewer_, never use it.)
 5. `options.js` renders the list and autosaves via `saveMessages()` → `chrome.storage.sync` (there is **no** Save button): typing is debounced (1s) to stay under Chrome sync's write quota, button actions (Add message / Insert author tag / Restore defaults) save immediately, a failed save is retried automatically up to 3 total attempts (1s apart; a fresh edit restarts the budget), and overlapping writes are chained so an older snapshot can never overwrite a newer one. **Restore defaults** arms the button for a second confirming click (auto-cancels after 5s, or as soon as the list is edited or saved again), and pending edits flush on `pagehide`. A `chrome.storage.onChanged` listener in the content script refreshes its cache immediately, so already-open tabs pick up edits.
 
 ## Storage contract (important)
@@ -74,9 +76,9 @@ Node 20+ (CI pins Node 20; currently developed on Node 22).
 ## Build & CI
 
 - `.github/workflows/build-deploy.yaml` runs on pushes/PRs to `main`, **ignoring `docs/**` and `*.md`** — editing Markdown (including this file) does not trigger CI.
-- CI does: `npm ci` → `npm run build:prod` → `npm run test:ci`, uploads `dist/` as an artifact, and on `main` publishes it to the Chrome Web Store.
+- Build/deploy CI does: `npm ci` → `npm run lint` → `npm run build:prod` → `npm run test:ci`, uploads `dist/` as an artifact, and on `main` publishes it to the Chrome Web Store.
 - Because publishing is automatic, bump `version` in **both** `src/manifest.json` and `package.json` for every release (Semver; currently `1.2.0`) — `docs/CONTRIBUTING.md` requires this.
-- `dist/` is gitignored. To test manually: `npm run build:prod`, then *chrome://extensions → Load unpacked → `dist/`*, and reload the GitHub tab (the content script logs a hint if the extension was reloaded).
+- `dist/` is gitignored. To test manually: `npm run build:prod`, then _chrome://extensions → Load unpacked → `dist/`_, and reload the GitHub tab (the content script logs a hint if the extension was reloaded).
 
 ## Conventions
 

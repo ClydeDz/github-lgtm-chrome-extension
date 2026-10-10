@@ -17,12 +17,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.github.com/*"
-      ],
-      "js": [
-        "index.js"
-      ]
+      "matches": ["*://*.github.com/*"],
+      "js": ["index.js"]
     }
   ]
 }

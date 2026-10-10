@@ -12,7 +12,7 @@ const intervalId = setInterval(async function () {
     clearInterval(intervalId);
     console.info(
       "⚠️ GitHub LGTM:",
-      "Please reload the page since the extension was reloaded"
+      "Please reload the page since the extension was reloaded",
     );
   }
 }, 1000);

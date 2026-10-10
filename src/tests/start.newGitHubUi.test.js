@@ -35,7 +35,10 @@ describe("start - new github ui", () => {
       },
     ]);
     const dispatchEventSpy = jest.fn();
-    const reviewCommentsTextAreaSpy = { value: "", dispatchEvent: dispatchEventSpy };
+    const reviewCommentsTextAreaSpy = {
+      value: "",
+      dispatchEvent: dispatchEventSpy,
+    };
     querySelectorSpy.mockReturnValue(reviewCommentsTextAreaSpy);
     getReviewMessageSpy.mockReturnValue("LGTM!");
 
@@ -44,13 +47,13 @@ describe("start - new github ui", () => {
     changeHandler({ target: { value: "approve" } });
 
     expect(querySelectorAllSpy).toHaveBeenCalledWith(
-      'input[name="reviewEvent"]'
+      'input[name="reviewEvent"]',
     );
 
     expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
 
     expect(querySelectorSpy).toHaveBeenCalledWith(
-      'textarea[placeholder="Leave a comment"]'
+      'textarea[placeholder="Leave a comment"]',
     );
     expect(getReviewMessageSpy).toHaveBeenCalledTimes(1);
     expect(reviewCommentsTextAreaSpy.value).toBe("LGTM!");
@@ -68,7 +71,7 @@ describe("start - new github ui", () => {
     start(mockDocument);
 
     expect(querySelectorAllSpy).toHaveBeenCalledWith(
-      'input[name="reviewEvent"]'
+      'input[name="reviewEvent"]',
     );
 
     expect(getReviewMessageSpy).not.toHaveBeenCalled();
@@ -93,13 +96,13 @@ describe("start - new github ui", () => {
     changeHandler({ target: { value: "comment" } });
 
     expect(querySelectorAllSpy).toHaveBeenCalledWith(
-      'input[name="reviewEvent"]'
+      'input[name="reviewEvent"]',
     );
 
     expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
 
     expect(querySelectorSpy).not.toHaveBeenCalledWith(
-      'textarea[placeholder="Leave a comment"]'
+      'textarea[placeholder="Leave a comment"]',
     );
     expect(getReviewMessageSpy).not.toHaveBeenCalled();
   });
@@ -125,7 +128,7 @@ describe("start - new github ui", () => {
     changeHandler({ target: { value: "approve" } });
 
     expect(querySelectorSpy).toHaveBeenCalledWith(
-      'textarea[placeholder="Leave a comment"]'
+      'textarea[placeholder="Leave a comment"]',
     );
 
     expect(getReviewMessageSpy).not.toHaveBeenCalled();

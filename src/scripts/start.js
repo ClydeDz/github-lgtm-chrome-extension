@@ -1,11 +1,20 @@
 import * as utilModule from "./util";
 
 const updateTextareaValue = (textarea, value) => {
-  const prototype = typeof HTMLTextAreaElement !== "undefined" ? HTMLTextAreaElement.prototype : null;
-  const nativeValueSetter = prototype ? Object.getOwnPropertyDescriptor(prototype, "value")?.set : null;
-  
+  const prototype =
+    typeof HTMLTextAreaElement !== "undefined"
+      ? HTMLTextAreaElement.prototype
+      : null;
+  const nativeValueSetter = prototype
+    ? Object.getOwnPropertyDescriptor(prototype, "value")?.set
+    : null;
+
   let success = false;
-  if (nativeValueSetter && typeof HTMLTextAreaElement !== "undefined" && textarea instanceof HTMLTextAreaElement) {
+  if (
+    nativeValueSetter &&
+    typeof HTMLTextAreaElement !== "undefined" &&
+    textarea instanceof HTMLTextAreaElement
+  ) {
     try {
       nativeValueSetter.call(textarea, value);
       success = true;
@@ -139,14 +148,14 @@ const runOldGitHubUi = (doc, approveButton) => {
 
   approveButton.addEventListener("click", function () {
     const reviewCommentsTextArea = doc.getElementById(
-      "pull_request_review_body"
+      "pull_request_review_body",
     );
 
     if (!reviewCommentsTextArea) return;
 
     const message = utilModule.applyPlaceholders(
       utilModule.getReviewMessage(),
-      getPullRequestAuthor(doc)
+      getPullRequestAuthor(doc),
     );
     updateTextareaValue(reviewCommentsTextArea, message);
   });
@@ -159,14 +168,14 @@ const runNewGitHubUi = (doc, radios) => {
     radio.addEventListener("change", (e) => {
       if (e.target.value === "approve") {
         const reviewCommentsTextArea = doc.querySelector(
-          'textarea[placeholder="Leave a comment"]'
+          'textarea[placeholder="Leave a comment"]',
         );
 
         if (!reviewCommentsTextArea) return;
 
         const message = utilModule.applyPlaceholders(
           utilModule.getReviewMessage(),
-          getPullRequestAuthor(doc)
+          getPullRequestAuthor(doc),
         );
         updateTextareaValue(reviewCommentsTextArea, message);
       }
@@ -178,7 +187,7 @@ export function start(injectedDocument) {
   const doc = injectedDocument;
 
   const approveButton = doc.getElementById(
-    "pull_request_review[event]_approve"
+    "pull_request_review[event]_approve",
   );
 
   runOldGitHubUi(doc, approveButton);
@@ -187,4 +196,3 @@ export function start(injectedDocument) {
 
   runNewGitHubUi(doc, radios);
 }
-

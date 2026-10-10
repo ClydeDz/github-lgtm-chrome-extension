@@ -31,9 +31,12 @@ function showStatus(text, isError) {
   status.classList.toggle("error", Boolean(isError));
 
   clearTimeout(statusTimer);
-  statusTimer = setTimeout(() => {
-    status.textContent = "";
-  }, isError ? 5000 : 3000);
+  statusTimer = setTimeout(
+    () => {
+      status.textContent = "";
+    },
+    isError ? 5000 : 3000,
+  );
 }
 
 function createRow(message) {
@@ -67,7 +70,7 @@ function render(messages) {
 
 function getMessagesFromForm() {
   return Array.from(messagesList.querySelectorAll("input")).map(
-    (input) => input.value
+    (input) => input.value,
   );
 }
 
@@ -94,7 +97,7 @@ function queueSave(messages) {
 
   pendingWrite = start.then(
     () => undefined,
-    () => undefined
+    () => undefined,
   );
   return start;
 }
@@ -111,7 +114,7 @@ async function flushSave() {
     saveAttempts = 0;
     showStatus(
       `Saved ${saved.length} message${saved.length === 1 ? "" : "s"}.`,
-      false
+      false,
     );
   } catch (error) {
     dirty = true;
@@ -121,13 +124,13 @@ async function flushSave() {
     if (saveAttempts < MAX_SAVE_ATTEMPTS) {
       showStatus(
         `Couldn't save yet — retrying (${saveAttempts + 1}/${MAX_SAVE_ATTEMPTS})…`,
-        true
+        true,
       );
       saveTimer = setTimeout(flushSave, RETRY_DELAY_MS);
     } else {
       showStatus(
         `Couldn't save your changes after ${MAX_SAVE_ATTEMPTS} attempts.`,
-        true
+        true,
       );
     }
   }
@@ -186,7 +189,7 @@ insertAuthorButton.addEventListener("click", () => {
   const clamp = (position) =>
     Math.min(
       Math.max(typeof position === "number" ? position : value.length, 0),
-      value.length
+      value.length,
     );
   const start = useSelection ? clamp(input.selectionStart) : value.length;
   const end = useSelection ? clamp(input.selectionEnd) : start;
