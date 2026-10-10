@@ -25,7 +25,7 @@ export const AUTHOR_PLACEHOLDER = "<AUTHOR>";
 // characters are escaped so the match stays literal.
 const AUTHOR_PLACEHOLDER_PATTERN = new RegExp(
   AUTHOR_PLACEHOLDER.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-  "gi"
+  "gi",
 );
 
 const STORAGE_KEY = "messages";

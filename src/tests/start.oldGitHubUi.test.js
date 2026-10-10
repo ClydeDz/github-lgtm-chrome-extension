@@ -35,7 +35,7 @@ describe("start - old github ui", () => {
 
     expect(getElementByIdSpy).toHaveBeenCalledTimes(2);
     expect(getElementByIdSpy).toHaveBeenCalledWith(
-      "pull_request_review[event]_approve"
+      "pull_request_review[event]_approve",
     );
     expect(getElementByIdSpy).toHaveBeenCalledWith("pull_request_review_body");
 
@@ -55,7 +55,7 @@ describe("start - old github ui", () => {
 
     expect(getElementByIdSpy).toHaveBeenCalledTimes(1);
     expect(getElementByIdSpy).toHaveBeenCalledWith(
-      "pull_request_review[event]_approve"
+      "pull_request_review[event]_approve",
     );
 
     expect(getReviewMessageSpy).not.toHaveBeenCalled();
@@ -67,7 +67,10 @@ describe("start - old github ui", () => {
       handler();
     });
     const dispatchEventSpy = jest.fn();
-    const reviewCommentsTextAreaSpy = { value: "", dispatchEvent: dispatchEventSpy };
+    const reviewCommentsTextAreaSpy = {
+      value: "",
+      dispatchEvent: dispatchEventSpy,
+    };
     getElementByIdSpy
       .mockReturnValueOnce({ addEventListener: addEventListenerSpy })
       .mockReturnValueOnce(reviewCommentsTextAreaSpy);

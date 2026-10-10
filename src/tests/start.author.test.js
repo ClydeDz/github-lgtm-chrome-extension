@@ -137,8 +137,7 @@ describe("getPullRequestAuthor", () => {
       querySelector: (selector) =>
         selector === "a.author"
           ? {
-              getAttribute: (name) =>
-                name === "href" ? "/john-paul" : null,
+              getAttribute: (name) => (name === "href" ? "/john-paul" : null),
             }
           : null,
     };

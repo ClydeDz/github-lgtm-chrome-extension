@@ -39,7 +39,15 @@ describe("util - messages storage", () => {
   describe("normalizeMessages", () => {
     test("should keep only non-empty strings and trim them", () => {
       expect(
-        normalizeMessages([" LGTM ", "", "   ", 42, null, undefined, "Ship it"])
+        normalizeMessages([
+          " LGTM ",
+          "",
+          "   ",
+          42,
+          null,
+          undefined,
+          "Ship it",
+        ]),
       ).toEqual(["LGTM", "Ship it"]);
     });
 
@@ -93,7 +101,7 @@ describe("util - messages storage", () => {
 
     test("should reject when sync storage is unavailable", async () => {
       await expect(saveMessages(["LGTM"])).rejects.toThrow(
-        "Chrome sync storage is not available."
+        "Chrome sync storage is not available.",
       );
     });
   });
@@ -117,7 +125,9 @@ describe("util - messages storage", () => {
       global.chrome = mock.chrome;
       await initMessages();
 
-      expect(mock.chrome.storage.onChanged.addListener).toHaveBeenCalledTimes(1);
+      expect(mock.chrome.storage.onChanged.addListener).toHaveBeenCalledTimes(
+        1,
+      );
 
       const [listener] = mock.listeners;
       listener({ messages: { newValue: ["Updated", "Another"] } }, "local");

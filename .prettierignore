@@ -1,0 +1,4 @@
+node_modules/
+dist/
+coverage/
+src/tests/junit.xml

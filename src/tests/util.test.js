@@ -17,34 +17,34 @@ describe("util", () => {
     test("should replace the exported AUTHOR_PLACEHOLDER constant", () => {
       const message = `Nice work, ${AUTHOR_PLACEHOLDER}`;
       expect(applyPlaceholders(message, "john-paul")).toBe(
-        "Nice work, @john-paul"
+        "Nice work, @john-paul",
       );
     });
 
     test("should replace <AUTHOR> with the tagged username", () => {
       expect(applyPlaceholders("Nice work, <AUTHOR>", "john-paul")).toBe(
-        "Nice work, @john-paul"
+        "Nice work, @john-paul",
       );
     });
 
     test("should replace every occurrence, ignoring case", () => {
       expect(applyPlaceholders("<author> + <AUTHOR>", "octocat")).toBe(
-        "@octocat + @octocat"
+        "@octocat + @octocat",
       );
     });
 
     test("should not double-tag an author that already has an @", () => {
       expect(applyPlaceholders("Hi <AUTHOR>", "@john-paul")).toBe(
-        "Hi @john-paul"
+        "Hi @john-paul",
       );
     });
 
     test("should leave the placeholder untouched when the author is unknown", () => {
       expect(applyPlaceholders("Nice work, <AUTHOR>", null)).toBe(
-        "Nice work, <AUTHOR>"
+        "Nice work, <AUTHOR>",
       );
       expect(applyPlaceholders("Nice work, <AUTHOR>", "")).toBe(
-        "Nice work, <AUTHOR>"
+        "Nice work, <AUTHOR>",
       );
     });
 
