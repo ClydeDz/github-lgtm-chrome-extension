@@ -12,7 +12,7 @@ Use this workflow when preparing a pull request for this repository. Keep the PR
 - Read `AGENTS.md`, `.github/pull_request_template.md`, and `docs/CONTRIBUTING.md` before drafting or opening a PR.
 - This repo is a plain JavaScript Manifest V3 Chrome extension. There is no backend and the extension stores user data in `chrome.storage.sync` only.
 - Any release change must bump the version in both `src/manifest.json` and `package.json`.
-- The supported validation flow is `npm ci` → `npm run build:prod` → `npm run test:ci`.
+- The supported validation flow is `npm ci` → `npm run lint` → `npm run build:prod` → `npm run test:ci`.
 - Keep `README.md` and `docs/README.md` in sync when editing documentation.
 
 ## Procedure
@@ -21,7 +21,7 @@ Use this workflow when preparing a pull request for this repository. Keep the PR
 2. Read `.github/pull_request_template.md` and follow it exactly. Keep the existing headings, order, checkbox wording, and checklist items. Do not replace the template with a new format or add extra sections such as “Summary of changes” or “Testing.”
 3. Review the actual code changes and choose a concise PR title. It should state the user-visible change or fix in a short, direct way.
 4. Find related open issues with `gh issue list --state open` and compare them to the change. In the template's “Does this fix an open issue?” section, list only issues the PR actually resolves as `Closes #<number>`. Mention issues that are related but not fixed separately; do not invent a link where the connection is uncertain.
-5. Run the repo's required validation locally before marking the checklist complete. At minimum, use the documented CI flow: `npm ci`, `npm run build:prod`, and `npm run test:ci`. If any command fails, report the failing output and do not claim the checklist item passed.
+5. Run the repo's required validation locally before marking the checklist complete. At minimum, use the documented CI flow: `npm ci`, `npm run lint`, `npm run build:prod`, and `npm run test:ci`. If any command fails, report the failing output and do not claim the checklist item passed.
 6. Fill in the template body using the repo's real change details:
    - Under “What has changed and why?”, write a short bullet list of the actual code and behavior changes.
    - Use simple, direct sentences and common words.
